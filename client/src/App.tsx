@@ -1,10 +1,12 @@
 import "./App.css";
+import TopBar from "./components/topBar/TopBar.component";
 import Home from "./pages/home/Home.page";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
+    <div>
+      <TopBar />
+      <div className="w-full h-screen bg-white"></div>
     </div>
   );
 }
