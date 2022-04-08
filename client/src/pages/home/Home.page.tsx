@@ -1,5 +1,3 @@
-import { Button } from "antd";
-
 type Props = {};
 
 export default function Home({}: Props) {
