@@ -63,6 +63,20 @@ export class User {
   })
   isAdmin: boolean;
 
+  @Prop({
+    type: String,
+    required: false,
+    default: '',
+  })
+  bio: string;
+
+  @Prop({
+    type: String,
+    required: false,
+    default: '',
+  })
+  address: string;
+
   @Prop({ type: Date, required: true })
   createdAt: Date;
 }

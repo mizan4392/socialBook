@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
@@ -9,6 +10,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private jwtTokenService: JwtService,
   ) {}
 
   @Post('login')
@@ -24,6 +26,12 @@ export class AuthController {
     if (!passwordValid) {
       throw new BadRequestException(`Wrong password`);
     }
-    return 'ok';
+
+    const payload = {
+      userName: user.userName,
+    };
+    return {
+      access_token: this.jwtTokenService.sign(payload),
+    };
   }
 }
