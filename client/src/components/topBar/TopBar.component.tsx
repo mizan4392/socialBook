@@ -21,8 +21,8 @@ export default function TopBar({}: Props) {
             style={{
               width: "25px",
               height: "25px",
-              color: "white",
             }}
+            className="text-purple-600"
           />
         </Badge>
       ),
@@ -35,8 +35,8 @@ export default function TopBar({}: Props) {
             style={{
               width: "25px",
               height: "25px",
-              color: "white",
             }}
+            className="text-purple-600"
           />
         </Badge>
       ),
@@ -49,8 +49,8 @@ export default function TopBar({}: Props) {
             style={{
               width: "25px",
               height: "25px",
-              color: "white",
             }}
+            className="text-purple-600"
           />
         </Badge>
       ),
@@ -61,11 +61,11 @@ export default function TopBar({}: Props) {
     <div className="shadow-md w-full fixed top-0 left-0 ">
       <div className="md:flex items-center justify-between bg-white py-4 md:px-10 px-7">
         <div className=" text-white font-bold text-2xl cursor-pointer flex items-center font-[Poppins]">
-          <span className="text-white">SocialBook</span>
+          <span className="text-purple-600">SocialBook</span>
         </div>
         <div
           onClick={() => setOpen(!open)}
-          className="text-white text-3xl absolute right-8 top-6 cursor-pointer md:hidden"
+          className="text-purple-600 text-3xl absolute right-8 top-6 cursor-pointer md:hidden"
         >
           {open ? <AiOutlineClose /> : <AiOutlineMenu />}
         </div>
