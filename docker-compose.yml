@@ -5,11 +5,13 @@ services:
     image: mongo:latest
     container_name: socialbook_mongodb
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-      MONGO_INITDB_DATABASE: socialbook
     ports:
       - 27017:27017
+    networks:
+      - socailbook_net
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+networks:
+  socailbook_net:
+    external:
+      name: socailbook_net
