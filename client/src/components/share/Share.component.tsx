@@ -21,7 +21,7 @@ export default function Share({}: Props) {
           />
         </div>
         <hr className="m-[20px]" />
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-between">
           <div className="flex ml-[20px]">
             <div className="flex items-center mr-[15px] cursor-pointer ">
               <IoMdPhotos className="text-sm mr-3 text-orange-500 " />

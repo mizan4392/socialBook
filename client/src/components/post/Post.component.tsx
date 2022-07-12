@@ -20,25 +20,23 @@ export default function Post({ post }: Props) {
           <div className="flex items-center">
             <img
               className="w-[23px] h-[32px] rounded-lg object-cover "
-              //   src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-              src="/assets/person/1.jpeg"
+              src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
               alt=""
             />
             <span className="text-[15px] font-medium ml-[10px]">
-              Mizan
-              {/* {Users.filter((u) => u.id === post?.userId)[0].username} */}
+              {Users.filter((u) => u.id === post?.userId)[0].username}
             </span>
-            <span className="text-[12px]">{post?.date}</span>
+            <span className="ml-2 text-[12px]">{post?.date}</span>
           </div>
           <div className="">
             <FiMoreVertical />
           </div>
         </div>
         <div className="mt-[20px]">
-          <span className="text-[12px]">Hey It's my first post</span>
+          <span className="text-[12px]">{post?.desc}</span>
           <img
             className="mt-[20px] w-full max-h-[500px] object-contain"
-            src="assets/post/1.jpeg"
+            src={post?.photo}
             alt=""
           />
         </div>
