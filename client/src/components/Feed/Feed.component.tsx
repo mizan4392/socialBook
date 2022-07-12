@@ -1,4 +1,5 @@
 import React from "react";
+import { Posts } from "../../data";
 import Post from "../post/Post.component";
 import Share from "../share/Share.component";
 
@@ -9,11 +10,9 @@ export default function Feed({}: Props) {
     <div className="flex-[5.5]">
       <div className="p-20px">
         <Share />
-        <Post post={undefined} />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        {Posts?.map((p) => (
+          <Post key={p.id} post={p} />
+        ))}
       </div>
     </div>
   );
