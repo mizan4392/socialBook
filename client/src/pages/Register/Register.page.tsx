@@ -1,43 +1,71 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import "./Register.css";
 type Props = {};
 
 export default function Register({}: Props) {
   return (
-    <div className="w-[100vw] h-[100vh] bg-[#f0f2f5] flex items-center justify-center ">
-      <div className="w-[70%] h-[70%] flex ">
-        <div className="flex-1 flex flex-col justify-center">
-          <h3 className="text-5xl font-bold text-purple-500">ScoialBook</h3>
-          <span className="text-2xl">
-            Connect with friends and the world around you on Lamasocial.
-          </span>
-        </div>
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="h-[400px] p-[20px] bg-white rounded-md flex flex-col justify-between">
-            <input
-              placeholder="UserName"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
-              type="text"
-            />
-            <input
-              placeholder="Email"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
-            />
-            <input
-              placeholder="Password"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
-            />
-            <input
-              placeholder="Confirm Password"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
-            />
-            <button className="p-[10px] rounded-md border-none bg-purple-500 text-white text-lg font-medium cursor-pointer ">
-              Signup
-            </button>
-            <button className="p-[10px] rounded-md border-none bg-[#42b72a] text-white text-lg font-medium cursor-pointer ">
+    <div className="h-[100vh] bg-[#C7D1F7] flex items-center justify-center ">
+      <div className="flex text-white bg-white w-[50%] rounded-lg min-h-[600px] gap-[30px] overflow-hidden flex-row-reverse	">
+        <div className="left flex-1 flex flex-col p-[50px]  ">
+          <h1 className="text-[100px] leading-[100px] text-white">
+            Hello World.
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero cum,
+            alias totam numquam ipsa exercitationem dignissimos, error nam,
+            consequatur.
+          </p>
+          <span className="text-[14px]">Don't you have an account?</span>
+          <Link to={"/login"}>
+            <button className="w-[50%] p-[10px] border-none bg-white text-purple-600 ">
               Login
             </button>
-          </div>
+          </Link>
+        </div>
+        <div className="flex-1 p-[50px] flex flex-col gap-[50px] justify-center ">
+          <h1 className="text-[#555]">Register</h1>
+          <form className="flex flex-col gap-[30px]">
+            <input
+              type="text"
+              placeholder="Username"
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
+            />
+            <input
+              type="email"
+              placeholder="Email:"
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Name..."
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
+            />
+            <button className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer ">
+              Register
+            </button>
+          </form>
         </div>
       </div>
     </div>

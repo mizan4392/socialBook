@@ -1,35 +1,53 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import "./Login.css";
 type Props = {};
 
 export default function Login({}: Props) {
   return (
-    <div className="w-[100vw] h-[100vh] bg-[#f0f2f5] flex items-center justify-center ">
-      <div className="w-[70%] h-[70%] flex ">
-        <div className="flex-1 flex flex-col justify-center">
-          <h3 className="text-5xl font-bold text-purple-500">ScoialBook</h3>
-          <span className="text-2xl">
-            Connect with friends and the world around you on Lamasocial.
-          </span>
+    <div className="h-[100vh] bg-[#C7D1F7] flex items-center justify-center ">
+      <div className="flex text-white bg-white w-[50%] rounded-lg min-h-[600px] gap-[30px] overflow-hidden	">
+        <div className="left flex-1 flex flex-col p-[50px]  ">
+          <h1 className="text-[100px] leading-[100px] text-white">
+            Hello World.
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero cum,
+            alias totam numquam ipsa exercitationem dignissimos, error nam,
+            consequatur.
+          </p>
+          <span className="text-[14px]">Don't you have an account?</span>
+          <Link to={"/register"}>
+            <button className="w-[50%] p-[10px] border-none bg-white text-purple-600 ">
+              Register
+            </button>
+          </Link>
         </div>
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="h-[300px] p-[20px] bg-white rounded-md flex flex-col justify-between">
+        <div className="flex-1 p-[50px] flex flex-col gap-[50px] justify-center ">
+          <h1 className="text-[#555]">Login</h1>
+          <form className="flex flex-col gap-[30px]">
             <input
-              placeholder="Email"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
+              type="text"
+              placeholder="Username"
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
             />
             <input
+              type="password"
               placeholder="Password"
-              className="h-[50px] rounded-md border-[1px] border-solid border-gray-100 text-lg pl-[20px]"
+              className="border-none "
+              style={{
+                borderBottom: "1px solid lightgray",
+                padding: "20px 10px",
+              }}
             />
-            <button className="p-[10px] rounded-md border-none bg-purple-500 text-white text-lg font-medium cursor-pointer ">
-              Log In
+            <button className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer ">
+              Login
             </button>
-            <span className="text-center text-[#1775ee]">Forgot Password?</span>
-            <button className="p-[10px] rounded-md border-none bg-[#42b72a] text-white text-lg font-medium cursor-pointer ">
-              Create a New Account
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
