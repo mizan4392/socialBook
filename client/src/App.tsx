@@ -16,7 +16,7 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const currentUser = null;
+  const currentUser = true;
   const ProtectedRoute = ({ children }: any) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
@@ -27,11 +27,11 @@ function App() {
     return (
       <div>
         <TopBar />
-        <div className="flex">
+        {/* <div className="flex">
           <SideBar />
           <Outlet />
           <RightBar />
-        </div>
+        </div> */}
       </div>
     );
   };
