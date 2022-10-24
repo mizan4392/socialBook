@@ -6,4 +6,7 @@
   .btn {
     @apply text-white text-3xl absolute right-8 top-6 cursor-pointer md:hidden;
   }
+  .nav-icon {
+    @apply text-lg cursor-pointer;
+  }
 }
