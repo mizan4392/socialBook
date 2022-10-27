@@ -34,10 +34,16 @@ export default function RightBar({}: Props) {
   };
 
   return (
-    <div className="flex-[3.5]">
-      <div className="px-[20px]">
-        <HomeRightBar />
-      </div>
+    <div
+      style={{ flex: 3 }}
+      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll "
+    >
+      RightBar
     </div>
+    // <div className="flex-[3.5]">
+    //   <div className="px-[20px]">
+    //     <HomeRightBar />
+    //   </div>
+    // </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Feed from "../../components/Feed/Feed.component";
 import RightBar from "../../components/rightBar/RightBar.component";
-import SideBar from "../../components/sideBar/SideBar.component";
+import SideBar from "../../components/sideBar/LeftBar.component";
 import TopBar from "../../components/topBar/TopBar.component";
 
 type Props = {};

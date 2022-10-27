@@ -3,7 +3,7 @@ import "./App.css";
 import Feed from "./components/Feed/Feed.component";
 import Login from "./pages/Login/Login.page";
 import RightBar from "./components/rightBar/RightBar.component";
-import SideBar from "./components/sideBar/SideBar.component";
+
 import TopBar from "./components/topBar/TopBar.component";
 import Home from "./pages/home/Home.page";
 import Profile from "./pages/Profile/Profile.page";
@@ -14,6 +14,7 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import LeftBar from "./components/sideBar/LeftBar.component";
 
 function App() {
   const currentUser = true;
@@ -27,11 +28,14 @@ function App() {
     return (
       <div>
         <TopBar />
-        {/* <div className="flex">
-          <SideBar />
-          <Outlet />
+        <div className="flex">
+          <LeftBar />
+          <div style={{ flex: 6 }}>
+            <Outlet />
+          </div>
+
           <RightBar />
-        </div> */}
+        </div>
       </div>
     );
   };
@@ -47,7 +51,13 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Feed />,
+          element: (
+            <div>
+              {Array.from(Array(50)).map((itm) => {
+                return <h1>News Feed</h1>;
+              })}
+            </div>
+          ),
         },
         {
           path: "/profile/:id",
