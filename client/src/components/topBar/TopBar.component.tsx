@@ -15,12 +15,15 @@ import { Link } from "react-router-dom";
 const { Search } = Input;
 type Props = {};
 
-const img =
+export const img =
   "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 export default function TopBar({}: Props) {
   return (
-    <div className="flex items-center justify-between px-[20px] py-[10px] border-[1px]	border-gray-500 ">
+    <div
+      className="flex items-center justify-between px-[20px] py-[10px] border-[1px] bg-whit sticky top-0 bg-white "
+      style={{ borderBottom: "1px solid gray" }}
+    >
       <div className="flex items-center gap-[30px]">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="font-bold text-[20px] text-purple-600 ">
@@ -49,11 +52,7 @@ export default function TopBar({}: Props) {
         <AiOutlineMail className="nav-icon" />
         <IoIosNotifications className="nav-icon" />
         <div className="flex items-center gap-[10px] font-bold  ">
-          <img
-            className="w-[30px] h-[30px] rounded-[50%] object-cover  "
-            src={img}
-            alt=""
-          />
+          <img className="profile-avatar" src={img} alt="" />
           <span>{"Mizan"}</span>
         </div>
       </div>

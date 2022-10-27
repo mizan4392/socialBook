@@ -9,4 +9,19 @@
   .nav-icon {
     @apply text-lg cursor-pointer;
   }
+
+  .profile-avatar {
+    @apply w-[30px] h-[30px] rounded-[50%] object-cover;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
