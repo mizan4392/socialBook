@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Feed from "./components/Feed/Feed.component";
 import Login from "./pages/Login/Login.page";
@@ -17,6 +17,16 @@ import {
 import LeftBar from "./components/sideBar/LeftBar.component";
 
 function App() {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   const currentUser = true;
   const ProtectedRoute = ({ children }: any) => {
     if (!currentUser) {
@@ -75,11 +85,7 @@ function App() {
     },
   ]);
 
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

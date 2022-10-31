@@ -1,49 +1,69 @@
 import React from "react";
 import { Users } from "../../data";
+import Card, { CardListItem } from "../Card/Card.component";
 import Online from "../Online/Online.component";
+import { img } from "../topBar/TopBar.component";
 
 type Props = {};
 
 export default function RightBar({}: Props) {
-  const HomeRightBar = () => {
-    return (
-      <>
-        <div className="flex items-center">
-          <img
-            className="w-[40px] h-[40px] mr-[10px]"
-            src="assets/gift.png"
-            alt=""
-          />
-          <span className="text-md font-light	">
-            <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
-          </span>
-        </div>
-        <img
-          className="w-full rounded-md mb-[30px] mt-[30px]"
-          src="assets/ad.png"
-          alt=""
-        />
-        <h4 className="mb-[20px]">Online Friends</h4>
-        <ul className="p-0 m-0 list-none">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
-        </ul>
-      </>
-    );
-  };
-
   return (
     <div
       style={{ flex: 3 }}
-      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll "
+      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll"
     >
-      RightBar
+      <Card title="Suggestion For you">
+        {[0, 1, 2].map((itm) => {
+          return (
+            <CardListItem key={itm}>
+              <div className="flex items-center gap-[20px]">
+                <img className="profile-avatar" src={img} />
+                <span className="font-bold text-black">Mizan</span>
+              </div>
+              <div className="flex items-center gap-[20px]">
+                <button className="bg-blue-600 border-none p-[5px] text-white cursor-pointer">
+                  follow
+                </button>
+                <button className="bg-red-500 border-none p-[5px] text-white cursor-pointer">
+                  dismiss
+                </button>
+              </div>
+            </CardListItem>
+          );
+        })}
+      </Card>
+      <Card title="Suggestion For you">
+        {[0, 1, 2, 3].map((itm) => {
+          return (
+            <CardListItem>
+              <div className="flex items-center gap-[20px]">
+                <img className="profile-avatar" src={img} />
+                <p>
+                  <span className="font-bold text-black">Mizan</span> changed
+                  their cover Pic
+                </p>
+              </div>
+              <span>1min ago</span>
+            </CardListItem>
+          );
+        })}
+      </Card>
+      <Card title="Online Friends">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((itm) => {
+          return (
+            <CardListItem>
+              <div className="flex items-center gap-[20px] relative">
+                <img className="profile-avatar" src={img} />
+                <div
+                  className="absolute w-[12px] h-[12px] bg-lime-400 top-0 left-[25px]"
+                  style={{ borderRadius: "50%" }}
+                ></div>
+                <span className="font-bold text-black">Mizan</span>
+              </div>
+            </CardListItem>
+          );
+        })}
+      </Card>
     </div>
-    // <div className="flex-[3.5]">
-    //   <div className="px-[20px]">
-    //     <HomeRightBar />
-    //   </div>
-    // </div>
   );
 }
