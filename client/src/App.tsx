@@ -17,16 +17,6 @@ import {
 import LeftBar from "./components/sideBar/LeftBar.component";
 
 function App() {
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
   const currentUser = true;
   const ProtectedRoute = ({ children }: any) => {
     if (!currentUser) {
@@ -62,9 +52,9 @@ function App() {
         {
           path: "/",
           element: (
-            <div>
+            <div className="dark:bg-gray-800 dark:text-white">
               {Array.from(Array(50)).map((itm) => {
-                return <h1>News Feed</h1>;
+                return <h1 className="dark:text-white">News Feed</h1>;
               })}
             </div>
           ),

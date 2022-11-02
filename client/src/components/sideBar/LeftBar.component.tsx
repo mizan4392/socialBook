@@ -86,7 +86,7 @@ export default function LeftBar({}: Props) {
   return (
     <div
       style={{ flex: 2 }}
-      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll "
+      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:text-white dark:bg-gray-800 "
     >
       <div className="p-[20px]">
         <div className="flex flex-col gap-[20px]">
