@@ -94,9 +94,9 @@ export default function LeftBar({}: Props) {
             <img src={img} alt="" className="profile-avatar" />
             <span>{"Mizan"}</span>
           </div>
-          {itmes.slice(0, 5).map((itm) => {
+          {itmes.slice(0, 5).map((itm, i) => {
             return (
-              <div className="flex items-center gap-[20px]">
+              <div className="flex items-center gap-[20px]" key={i}>
                 <img src={itm.img} alt="" width="30px" height="30px" />
                 <span className="text-[14px]">{itm.label}</span>
               </div>
@@ -106,9 +106,9 @@ export default function LeftBar({}: Props) {
         <hr />
         <div className="flex flex-col gap-[20px]">
           <span className="text-[12px]">Your shortcuts</span>
-          {itmes.slice(6, 10).map((itm) => {
+          {itmes.slice(6, 10).map((itm, i) => {
             return (
-              <div className="flex items-center gap-[20px]">
+              <div className="flex items-center gap-[20px]" key={i}>
                 <img src={itm.img} alt="" width="30px" height="30px" />
                 <span className="text-[14px]">{itm.label}</span>
               </div>
@@ -118,9 +118,9 @@ export default function LeftBar({}: Props) {
         <hr />
         <div className="flex flex-col gap-[20px]">
           <span className="text-[12px]">Others</span>
-          {itmes.slice(10, 13).map((itm) => {
+          {itmes.slice(10, 13).map((itm, i) => {
             return (
-              <div className="flex items-center gap-[20px]">
+              <div className="flex items-center gap-[20px]" key={i}>
                 <img src={itm.img} alt="" width="30px" height="30px" />
                 <span className="text-[14px]">{itm.label}</span>
               </div>

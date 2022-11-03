@@ -37,7 +37,7 @@ export default function RightBar({}: Props) {
       <Card title="Suggestion For you">
         {[0, 1, 2, 3].map((itm) => {
           return (
-            <CardListItem>
+            <CardListItem key={itm}>
               <div className="flex items-center gap-[20px]">
                 <img className="profile-avatar" src={img} />
                 <p>
@@ -55,7 +55,7 @@ export default function RightBar({}: Props) {
       <Card title="Online Friends">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((itm) => {
           return (
-            <CardListItem>
+            <CardListItem key={itm}>
               <div className="flex items-center gap-[20px] relative">
                 <img className="profile-avatar" src={img} />
                 <div

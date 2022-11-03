@@ -1,3 +1,54 @@
+const img =
+  "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600";
+
+export const stories = [
+  {
+    id: 1,
+    name: "Mizan",
+    img: "https://images.unsplash.com/photo-1589095181425-c038b3871b6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zmxvd2VyJTIwbG92ZXxlbnwwfHwwfHw%3D&w=1000&q=80",
+  },
+  {
+    id: 2,
+    name: "Sobuz",
+    img: "https://images.unsplash.com/photo-1604085572504-a392ddf0d86a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8b3JhbmdlJTIwZmxvd2VyfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+  },
+  {
+    id: 3,
+    name: "Rezvee",
+    img: "https://images.unsplash.com/photo-1615744455875-7ad33653e8c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80",
+  },
+  {
+    id: 4,
+    name: "Hridoy",
+    img: "https://images.unsplash.com/photo-1586082207282-3dcb61d25ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cm9zZSUyMGZsb3dlcnxlbnwwfHwwfHw%3D&w=1000&q=80",
+  },
+  {
+    id: 5,
+    name: "Rana",
+    img: "https://images.unsplash.com/photo-1615744455875-7ad33653e8c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80",
+  },
+  // {
+  //   id: 6,
+  //   name: "Ismail",
+  //   img: "https://www.bhg.com/thmb/hB_a-tLu1q2Wndl-Jcs7cBwKzGg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/premixed-bouquet-flower-0e49a64c-d56684fed4a94f0b9bcee6f83b70c040.jpg",
+  // },
+  // {
+  //   id: 7,
+  //   name: "Manik",
+  //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKkPE9Pap3wxFnrI_Wki3Pg2fkRmWob0mtvw&usqp=CAU",
+  // },
+  // {
+  //   id: 8,
+  //   name: "Babu",
+  //   img: "https://images.unsplash.com/photo-1552409905-46aa1e84e2e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80",
+  // },
+  // {
+  //   id: 9,
+  //   name: "Opu",
+  //   img: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/surprising-flower-meanings-bleeding-hearts-1650767905.jpg",
+  // },
+];
+
 export interface UserI {
   id: number;
   profilePicture: string;
