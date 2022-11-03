@@ -30,7 +30,10 @@ function App() {
         <TopBar />
         <div className="flex">
           <LeftBar />
-          <div style={{ flex: 6 }}>
+          <div
+            style={{ flex: 6 }}
+            className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:text-white dark:bg-gray-800"
+          >
             <Outlet />
           </div>
 
@@ -51,13 +54,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: (
-            <div className="dark:bg-gray-800 dark:text-white">
-              {Array.from(Array(50)).map((itm) => {
-                return <h1 className="dark:text-white">News Feed</h1>;
-              })}
-            </div>
-          ),
+          element: <Home />,
         },
         {
           path: "/profile/:id",
