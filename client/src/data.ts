@@ -1,6 +1,16 @@
 const img =
   "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
+export interface PostI {
+  id?: number;
+  desc?: string;
+  photo?: string;
+  date?: string;
+  userId?: number;
+  like?: number;
+  comment?: number;
+}
+
 export const stories = [
   {
     id: 1,
@@ -107,7 +117,7 @@ export const Users = [
   },
 ];
 
-export const Posts = [
+export const Posts: PostI[] = [
   {
     id: 1,
     desc: "Love For All, Hatred For None.",
