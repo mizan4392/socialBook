@@ -1,68 +1,170 @@
 import React, { useState } from "react";
-import { Users } from "../../data";
+
 import { FiMoreVertical } from "react-icons/fi";
+import {
+  MdOutlineFavorite,
+  MdOutlineFavoriteBorder,
+  MdOutlineTextsms,
+  MdShare,
+} from "react-icons/md";
+import { Link } from "react-router-dom";
+import { PostI, Users } from "../../data";
 type Props = {
-  post?: any;
+  post?: PostI;
 };
 
 export default function Post({ post }: Props) {
-  const [like, setLike] = useState(post?.like);
+  const [like, setLike] = useState<any>(post?.like);
   const [isLiked, setIsLiked] = useState(false);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+
   return (
-    <div className="w-full rounded-md mt-[30px] share-shadow">
-      <div className="p-[10px]">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <img
-              className="w-[23px] h-[32px] rounded-lg object-cover "
-              src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-              alt=""
-            />
-            <span className="text-[15px] font-medium ml-[10px]">
-              {Users.filter((u) => u.id === post?.userId)[0].username}
-            </span>
-            <span className="ml-2 text-[12px]">{post?.date}</span>
+    <div
+      className="post shadow dark:bg-gray-800 dark:text-white"
+      style={{
+        borderRadius: "20px",
+      }}
+    >
+      <div className="container p-[20px]   ">
+        <div className="user flex items-center justify-between">
+          <div className="user-info flex gap-[20px] ">
+            <img src={post?.photo} className="profile-avatar" alt="s" />
+            <div className="details flex flex-col">
+              <Link
+                to={`/profile/${post?.userId}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <span className="name font-medium">
+                  {Users.filter((u) => u.id === post?.userId)[0].username}
+                </span>
+              </Link>
+              <span className="date text-[12px]">1min ago</span>
+            </div>
           </div>
-          <div className="">
+          <div>
             <FiMoreVertical />
           </div>
         </div>
-        <div className="mt-[20px]">
-          <span className="text-[12px]">{post?.desc}</span>
+        <div
+          className="content "
+          style={{
+            margin: "20px 0px",
+          }}
+        >
+          <p>{post?.desc}</p>
           <img
-            className="mt-[20px] w-full max-h-[500px] object-contain"
+            className="w-full max-h-[500px] object-cover"
             src={post?.photo}
-            alt=""
           />
         </div>
-        <div className="flex items-center justify-between m-2 ">
-          <div className="flex items-center">
-            <img
-              className="w-[24px] h-[24px] mr-5 cursor-pointer "
-              src="assets/like.png"
-              onClick={likeHandler}
-              alt=""
-            />
-            <img
-              className="w-[24px] h-[24px] mr-5 cursor-pointer "
-              src="assets/heart.png"
-              onClick={likeHandler}
-              alt=""
-            />
-            <span className="text-[15px]">32 people like it</span>
+        <div className="info flex items-center gap-[20px]">
+          <div className="items flex items-center gap-[10px] cursor-pointer text-sm ">
+            {like ? (
+              <MdOutlineFavorite style={{ color: "red" }} />
+            ) : (
+              <MdOutlineFavoriteBorder />
+            )}
+            12 likes
           </div>
-          <div>
-            <span className="cursor-pointer border-dashed text-[15px]">
-              {post?.comment} comments
-            </span>
+          <div className="items flex items-center gap-[10px] cursor-pointer text-sm">
+            <MdOutlineTextsms />
+            12 comments
+          </div>
+          <div className="items flex items-center gap-[10px] cursor-pointer text-sm">
+            <MdShare />
+            12 share
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+{
+  /* <div
+className="post shadow dark:bg-gray-800 dark:text-white"
+style={{
+  borderRadius: "20px",
+}}
+>
+<div className="container p-[20px]">
+  <div className="user flex items-center justify-center ">
+    <div className="userInfo flex gap-[20px]">
+      <img
+        src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+        alt=""
+        className="profile-avatar"
+      />
+      <div className="details flex flex-col">
+        <Link
+          to={`/profile/${post?.userId}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <span className="name font-medium">
+            {Users.filter((u) => u.id === post?.userId)[0].username}
+          </span>
+          <span className="date text-[12px]">1 min ago</span>
+        </Link>
+      </div>
+    </div>
+  </div>
+</div>
+</div> */
+}
+
+//
+
+// <div className="w-full rounded-md mt-[30px] share-shadow">
+// <div className="p-[10px]">
+//   <div className="flex items-center justify-between">
+//     <div className="flex items-center">
+//       <img
+//         className="w-[23px] h-[32px] rounded-lg object-cover "
+//         src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+//         alt=""
+//       />
+//       <span className="text-[15px] font-medium ml-[10px]">
+//         {Users.filter((u) => u.id === post?.userId)[0].username}
+//       </span>
+//       <span className="ml-2 text-[12px]">{post?.date}</span>
+//     </div>
+// <div className="">
+//   <FiMoreVertical />
+// </div>
+//   </div>
+//   <div className="mt-[20px]">
+//     <span className="text-[12px]">{post?.desc}</span>
+//     <img
+//       className="mt-[20px] w-full max-h-[500px] object-contain"
+//       src={post?.photo}
+//       alt=""
+//     />
+//   </div>
+// <div className="flex items-center justify-between m-2 ">
+//   <div className="flex items-center">
+//     <img
+//       className="w-[24px] h-[24px] mr-5 cursor-pointer "
+//       src="assets/like.png"
+//       onClick={likeHandler}
+//       alt=""
+//     />
+//     <img
+//       className="w-[24px] h-[24px] mr-5 cursor-pointer "
+//       src="assets/heart.png"
+//       onClick={likeHandler}
+//       alt=""
+//     />
+//     <span className="text-[15px]">32 people like it</span>
+//   </div>
+//   <div>
+//     <span className="cursor-pointer border-dashed text-[15px]">
+//       {post?.comment} comments
+//     </span>
+//   </div>
+// </div>
+// </div>
+// </div>
