@@ -9,6 +9,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { PostI, Users } from "../../data";
+import Comments from "../comment/Comments.component";
 type Props = {
   post?: PostI;
 };
@@ -16,6 +17,7 @@ type Props = {
 export default function Post({ post }: Props) {
   const [like, setLike] = useState<any>(post?.like);
   const [isLiked, setIsLiked] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -70,7 +72,10 @@ export default function Post({ post }: Props) {
             )}
             12 likes
           </div>
-          <div className="items flex items-center gap-[10px] cursor-pointer text-sm">
+          <div
+            className="items flex items-center gap-[10px] cursor-pointer text-sm"
+            onClick={() => setIsCommentOpen(!isCommentOpen)}
+          >
             <MdOutlineTextsms />
             12 comments
           </div>
@@ -79,41 +84,10 @@ export default function Post({ post }: Props) {
             12 share
           </div>
         </div>
+        {isCommentOpen ? <Comments /> : null}
       </div>
     </div>
   );
-}
-
-{
-  /* <div
-className="post shadow dark:bg-gray-800 dark:text-white"
-style={{
-  borderRadius: "20px",
-}}
->
-<div className="container p-[20px]">
-  <div className="user flex items-center justify-center ">
-    <div className="userInfo flex gap-[20px]">
-      <img
-        src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-        alt=""
-        className="profile-avatar"
-      />
-      <div className="details flex flex-col">
-        <Link
-          to={`/profile/${post?.userId}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <span className="name font-medium">
-            {Users.filter((u) => u.id === post?.userId)[0].username}
-          </span>
-          <span className="date text-[12px]">1 min ago</span>
-        </Link>
-      </div>
-    </div>
-  </div>
-</div>
-</div> */
 }
 
 //
