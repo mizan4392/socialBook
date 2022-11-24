@@ -3,6 +3,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {},
+    screen: {
+      tab: "960px",
+    },
   },
   plugins: [],
   mode: "jit",

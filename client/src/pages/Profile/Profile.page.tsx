@@ -39,9 +39,9 @@ export default function Profile({}: Props) {
           }}
         />
       </div>
-      <div style={{ padding: "20px 70px" }}>
+      <div className="p-[10px] md:px-[20] md:py-[70px] ">
         <div
-          className="shadow h-[180px] p-[50px] flex items-center justify-between mb-[20px] "
+          className="shadow h-[30vh] md:h-[180px] p-[20px] md:p-[50px] flex items-center justify-between mb-[20px] flex-col md:flex-row mt-[100px] md:mt-0 "
           style={{ borderRadius: "20px" }}
         >
           <div className="flex gap-[10px]" style={{ flex: 1 }}>
