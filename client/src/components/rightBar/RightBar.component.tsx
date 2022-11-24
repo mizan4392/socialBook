@@ -10,7 +10,7 @@ export default function RightBar({}: Props) {
   return (
     <div
       style={{ flex: 3 }}
-      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:bg-gray-800 dark:text-white"
+      className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:bg-gray-800 dark:text-white hidden lg:block"
     >
       <Card title="Suggestion For you">
         {[0, 1, 2].map((itm) => {

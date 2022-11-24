@@ -62,20 +62,24 @@ export default function TopBar({}: Props) {
           <MdOutlineDarkMode className="nav-icon" onClick={toggle} />
         )}
         <MdOutlineGridView className="nav-icon" />
-        <div className="flex items-center gap-[10px] rounded-[5px] p-[5px] ">
+        <div className="items-center gap-[10px] rounded-[5px] p-[5px] hidden md:flex">
           <MdSearch className="nav-icon" />
           <input
-            className="border-none w-[500px]"
+            className="border-none w-[200px] lg:w-[500px]"
             type="text"
             placeholder="Search..."
           />
         </div>
       </div>
-      <div className="flex items-center gap-[20px]">
+      <div className="block md:hidden">
+        <MdSearch className="nav-icon" />
+      </div>
+
+      <div className="items-center gap-[20px] hidden md:flex">
         <MdPersonPin className="nav-icon" />
         <AiOutlineMail className="nav-icon" />
         <IoIosNotifications className="nav-icon" />
-        <div className="flex items-center gap-[10px] font-bold  ">
+        <div className="items-center gap-[10px] font-bold hidden lg:flex  ">
           <img className="profile-avatar" src={img} alt="" />
           <span>{"Mizan"}</span>
         </div>
