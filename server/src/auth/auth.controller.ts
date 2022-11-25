@@ -15,7 +15,8 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body: LoginDto) {
-    const user = await this.userService.findByUserName(body.userName);
+    // const user = await this.userService.findByUserName(body.userName);
+    const user = { password: '', userName: '' };
     if (!user) {
       throw new BadRequestException(`No user found `);
     }

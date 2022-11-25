@@ -1,84 +1,42 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Entity()
 export class User {
-  @Prop({
-    type: String,
-    required: true,
-    min: 4,
-    max: 20,
-    unique: true,
-  })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'varchar', nullable: false })
   userName: string;
-  @Prop({
-    type: String,
-    required: true,
-    min: 4,
-    max: 50,
-    unique: true,
-  })
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
   email: string;
 
-  @Prop({
-    type: String,
-    required: false,
-    min: 8,
-  })
+  @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Prop({
-    type: String,
-    required: false,
-    default: '',
-  })
+  @Column({ type: 'varchar', nullable: true })
   profilePic: string;
 
-  @Prop({
-    type: String,
-    required: false,
-    default: '',
-  })
+  @Column({ type: 'varchar', nullable: true })
   coverPic: string;
 
-  @Prop({
-    type: Array,
-    required: false,
-    default: [],
-  })
+  @Column({ type: 'json', nullable: true })
   followers: string[];
-  @Prop({
-    type: Array,
-    required: false,
-    default: [],
-  })
+
+  @Column({ type: 'json', nullable: true })
   following: string[];
 
-  @Prop({
-    type: Boolean,
-    required: false,
-    default: false,
-  })
+  @Column({ type: 'boolean', nullable: true })
   isAdmin: boolean;
 
-  @Prop({
-    type: String,
-    required: false,
-    default: '',
-  })
+  @Column({ type: 'varchar', nullable: true })
   bio: string;
 
-  @Prop({
-    type: String,
-    required: false,
-    default: '',
-  })
+  @Column({ type: 'varchar', nullable: true })
   address: string;
 
-  @Prop({ type: Date, required: true })
+  @Column({ type: 'timestamp', nullable: true })
   createdAt: Date;
 }
-
-export const UserSchema = SchemaFactory.createForClass(User);
