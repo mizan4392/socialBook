@@ -35,6 +35,9 @@ export class User {
   bio: string;
 
   @Column({ type: 'varchar', nullable: true })
+  city: string;
+
+  @Column({ type: 'varchar', nullable: true })
   address: string;
 
   @Column({ type: 'timestamp', nullable: true })
