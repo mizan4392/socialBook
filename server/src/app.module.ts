@@ -16,6 +16,9 @@ import { Comment } from './post/entities/comment.entity';
 import { Like } from './like/entities/like.entity';
 import { Follow } from './follow/entities/follow.entity';
 import { Story } from './stories/entities/story.entity';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+
 config();
 
 const ormConfig = {
@@ -30,6 +33,8 @@ const ormConfig = {
     StoriesModule,
     FollowModule,
     LikeModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

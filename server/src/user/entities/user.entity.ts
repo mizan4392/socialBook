@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export type UserDocument = User & Document;
@@ -9,6 +10,9 @@ export class User {
 
   @Column({ type: 'varchar', nullable: false })
   userName: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  fullName: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   email: string;
