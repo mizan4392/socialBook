@@ -1,22 +1,39 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ApiBody, ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ReferenceObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { Response } from 'express';
+
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/auth.dto';
+import { LoginDto, RegisterDto } from './dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
     private jwtTokenService: JwtService,
+    private userService: UserService,
   ) {}
 
   @Post('login')
-  async login(@Body() body: LoginDto) {
-    // const user = await this.userService.findByUserName(body.userName);
-    const user = { password: '', userName: '' };
+  async login(
+    @Body() body: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const user = await this.userService.findByUserNameOrEmail(body.userName);
+
     if (!user) {
       throw new BadRequestException(`No user found `);
     }
@@ -30,9 +47,55 @@ export class AuthController {
 
     const payload = {
       userName: user.userName,
+      id: user.id,
     };
-    return {
-      access_token: this.jwtTokenService.sign(payload),
-    };
+    res
+      .cookie('access-token', this.jwtTokenService.sign(payload), {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(payload);
+  }
+
+  @ApiOperation({
+    description: 'Register a user',
+  })
+  @ApiBody({
+    type: RegisterDto,
+  })
+  @Post('register')
+  async registration(@Body() body: RegisterDto) {
+    //find existing user with email & userName
+    const existUser = await this.userService.findByUserNameOrEmail(
+      body.userName.trim(),
+      body.email.trim(),
+    );
+    //if exist throw conflict error
+    if (existUser) {
+      throw new ConflictException('User Already exist');
+    }
+    //else :
+    //hash password
+    const hash = await this.authService.hashPassword(body.password);
+    body.password = hash;
+    //create a new user
+
+    const created = await this.userService.createUser(body);
+    if (created) {
+      throw new HttpException('User Created', HttpStatus.CREATED);
+    } else {
+      throw new BadRequestException('somthing went wrong');
+    }
+  }
+
+  @Get('logOut')
+  logOut(@Res() res: Response) {
+    res
+      .clearCookie('access-token', {
+        secure: true,
+        sameSite: 'none',
+      })
+      .status(200)
+      .json('User has been logged out');
   }
 }

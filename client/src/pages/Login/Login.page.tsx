@@ -1,9 +1,28 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { CORE_API_URL } from "../../utils/environment";
 import "./Login.css";
 type Props = {};
 
 export default function Login({}: Props) {
+  const [loginPayload, setLoginPayload] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginPayload((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("registerPayload", loginPayload);
+  };
+
   return (
     <div className="h-[100vh] bg-[#C7D1F7] flex items-center justify-center ">
       <div className="flex text-white bg-white w-[50%] rounded-lg min-h-[600px] gap-[30px] overflow-hidden	">
@@ -34,6 +53,8 @@ export default function Login({}: Props) {
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="userName"
+              onChange={handleInputChange}
             />
             <input
               type="password"
@@ -43,8 +64,13 @@ export default function Login({}: Props) {
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="email"
+              onChange={handleInputChange}
             />
-            <button className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer ">
+            <button
+              onClick={handleClick}
+              className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer "
+            >
               Login
             </button>
           </form>

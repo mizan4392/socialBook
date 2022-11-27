@@ -1,9 +1,38 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { CORE_API_URL } from "../../utils/environment";
 import "./Register.css";
 type Props = {};
 
 export default function Register({}: Props) {
+  const [registerPayload, setRegisterPayload] = useState({
+    userName: "",
+    password: "",
+    fullName: "",
+    email: "",
+  });
+
+  const [error, setError] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterPayload((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("registerPayload", registerPayload);
+    try {
+      axios.post(`${CORE_API_URL}/auth/register`, registerPayload);
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
+  };
+
   return (
     <div className="h-[100vh] bg-[#C7D1F7] flex items-center justify-center ">
       <div className="flex text-white bg-white w-[50%] rounded-lg min-h-[600px] gap-[30px] overflow-hidden flex-row-reverse	">
@@ -29,40 +58,51 @@ export default function Register({}: Props) {
             <input
               type="text"
               placeholder="Username"
-              className="border-none "
+              className="border-none text-[black] "
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="userName"
+              onChange={handleInputChange}
             />
             <input
               type="email"
               placeholder="Email:"
-              className="border-none "
+              className="border-none text-[black]"
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="email"
+              onChange={handleInputChange}
             />
             <input
               type="text"
-              placeholder="Name..."
-              className="border-none "
+              placeholder="Full Name..."
+              className="border-none text-[black] "
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="fullName"
+              onChange={handleInputChange}
             />
             <input
               type="password"
               placeholder="Password"
-              className="border-none "
+              className="border-none text-[black]"
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
+              name="password"
+              onChange={handleInputChange}
             />
-            <button className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer ">
+            <button
+              onClick={handleClick}
+              className="w-[50%] p-[10px] border-none bg-[#038eef] text-[#fff] font-bold cursor-pointer "
+            >
               Register
             </button>
           </form>
