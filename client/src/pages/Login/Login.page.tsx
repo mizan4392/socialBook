@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CORE_API_URL } from "../../utils/environment";
 import "./Login.css";
 type Props = {};
@@ -10,7 +11,8 @@ export default function Login({}: Props) {
     userName: "",
     password: "",
   });
-
+  const navigate = useNavigate();
+  const notify = (message: string) => toast(message);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginPayload((prev) => ({
       ...prev,
@@ -20,7 +22,24 @@ export default function Login({}: Props) {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("registerPayload", loginPayload);
+    axios
+      .post(`${CORE_API_URL}/auth/login`, loginPayload, {
+        // withCredentials: true,
+      })
+      .then((response) => {
+        navigate("/");
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        const {
+          response: {
+            data: { message },
+          },
+        } = error;
+
+        notify(message);
+      });
   };
 
   return (
@@ -48,7 +67,7 @@ export default function Login({}: Props) {
             <input
               type="text"
               placeholder="Username"
-              className="border-none "
+              className="border-none text-[black]"
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
@@ -59,12 +78,12 @@ export default function Login({}: Props) {
             <input
               type="password"
               placeholder="Password"
-              className="border-none "
+              className="border-none text-[black] "
               style={{
                 borderBottom: "1px solid lightgray",
                 padding: "20px 10px",
               }}
-              name="email"
+              name="password"
               onChange={handleInputChange}
             />
             <button
