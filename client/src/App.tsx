@@ -15,6 +15,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import LeftBar from "./components/sideBar/LeftBar.component";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const currentUser = true;
@@ -72,7 +74,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 }
 
 export default App;

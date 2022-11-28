@@ -1,7 +1,9 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CORE_API_URL } from "../../utils/environment";
+
 import "./Register.css";
 type Props = {};
 
@@ -12,8 +14,8 @@ export default function Register({}: Props) {
     fullName: "",
     email: "",
   });
-
-  const [error, setError] = useState(false);
+  const navigate = useNavigate();
+  const notify = (message: string) => toast(message);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterPayload((prev) => ({
@@ -25,12 +27,21 @@ export default function Register({}: Props) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("registerPayload", registerPayload);
-    try {
-      axios.post(`${CORE_API_URL}/auth/register`, registerPayload);
-    } catch (e) {
-      console.log(e);
-      setError(true);
-    }
+    axios
+      .post(`${CORE_API_URL}/auth/register`, registerPayload)
+      .then((response) => {
+        notify("Account created successfully.You can login now");
+        navigate("/login");
+      })
+      .catch((error) => {
+        const {
+          response: {
+            data: { message },
+          },
+        } = error;
+
+        notify(message);
+      });
   };
 
   return (
