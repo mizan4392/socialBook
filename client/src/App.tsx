@@ -17,9 +17,13 @@ import {
 import LeftBar from "./components/sideBar/LeftBar.component";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { UserContext, UserI } from "./context/UserContext";
 
 function App() {
+  const queryClient = new QueryClient();
   const currentUser = true;
+  const [user, setCurrentUser] = useState<UserI | undefined>();
   const ProtectedRoute = ({ children }: any) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
@@ -28,7 +32,7 @@ function App() {
   };
   const Layout = () => {
     return (
-      <div>
+      <QueryClientProvider client={queryClient}>
         <TopBar />
         <div className="flex">
           <LeftBar />
@@ -41,7 +45,7 @@ function App() {
 
           <RightBar />
         </div>
-      </div>
+      </QueryClientProvider>
     );
   };
 
@@ -73,12 +77,14 @@ function App() {
       element: <Register />,
     },
   ]);
-
+  const setUser = (user: UserI) => {
+    setCurrentUser(user);
+  };
   return (
-    <>
+    <UserContext.Provider value={{ user, setUser }}>
       <RouterProvider router={router} />
       <ToastContainer />
-    </>
+    </UserContext.Provider>
   );
 }
 

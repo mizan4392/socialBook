@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BsCalendarEventFill,
   BsFillBookmarkHeartFill,
@@ -12,7 +12,7 @@ import { MdSchool, MdWork } from "react-icons/md";
 type Props = {};
 import { Users } from "../../data";
 import CloseFriend from "../CloseFriend/CloseFriend";
-import { img } from "../topBar/TopBar.component";
+import { dummyUser, img } from "../topBar/TopBar.component";
 import Friends from "../../../assets/1.png";
 import Groups from "../../../assets/2.png";
 import Market from "../../../assets/3.png";
@@ -27,7 +27,9 @@ import Tutorials from "../../../assets/11.png";
 import Courses from "../../../assets/12.png";
 import Fund from "../../../assets/13.png";
 import "./LeftBar.css";
+import { UserContext } from "../../context/UserContext";
 export default function LeftBar({}: Props) {
+  const { user } = useContext(UserContext);
   const itmes = [
     {
       img: Friends,
@@ -91,8 +93,12 @@ export default function LeftBar({}: Props) {
       <div className="p-[20px]">
         <div className="flex flex-col gap-[20px]">
           <div className="flex gap-[10px]">
-            <img src={img} alt="" className="profile-avatar" />
-            <span>{"Mizan"}</span>
+            <img
+              src={user?.profilePic ? user?.profilePic : dummyUser}
+              alt=""
+              className="profile-avatar"
+            />
+            <span>{user?.userName}</span>
           </div>
           {itmes.slice(0, 5).map((itm, i) => {
             return (
