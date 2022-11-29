@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { PostI, Users } from "../../data";
 import Comments from "../comment/Comments.component";
 type Props = {
-  post?: PostI;
+  post?: any;
 };
 
 export default function Post({ post }: Props) {
@@ -34,15 +34,17 @@ export default function Post({ post }: Props) {
       <div className="container p-[20px]   ">
         <div className="user flex items-center justify-between">
           <div className="user-info flex gap-[20px] ">
-            <img src={post?.photo} className="profile-avatar" alt="s" />
+            <img
+              src={post?.user.profilePic}
+              className="profile-avatar"
+              alt="s"
+            />
             <div className="details flex flex-col">
               <Link
                 to={`/profile/${post?.userId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <span className="name font-medium">
-                  {Users.filter((u) => u.id === post?.userId)[0].username}
-                </span>
+                <span className="name font-medium">{post.user.userName}</span>
               </Link>
               <span className="date text-[12px]">1min ago</span>
             </div>
@@ -57,10 +59,10 @@ export default function Post({ post }: Props) {
             margin: "20px 0px",
           }}
         >
-          <p>{post?.desc}</p>
+          <p>{post?.description}</p>
           <img
             className="w-full max-h-[500px] object-cover"
-            src={post?.photo}
+            src={post?.postImage}
           />
         </div>
         <div className="info flex items-center gap-[20px]">

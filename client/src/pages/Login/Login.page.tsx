@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
 import { CORE_API_URL } from "../../utils/environment";
 import "./Login.css";
 type Props = {};
@@ -11,6 +12,7 @@ export default function Login({}: Props) {
     userName: "",
     password: "",
   });
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const notify = (message: string) => toast(message);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +30,7 @@ export default function Login({}: Props) {
       })
       .then((response) => {
         navigate("/");
-        console.log("response", response);
+        setUser && setUser(response.data);
       })
       .catch((error) => {
         console.log("error", error);

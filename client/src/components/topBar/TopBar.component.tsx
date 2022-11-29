@@ -1,5 +1,5 @@
 import { Avatar, Badge, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import {
@@ -12,15 +12,17 @@ import {
 import { TiHomeOutline } from "react-icons/ti";
 
 import { Link } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 const { Search } = Input;
 type Props = {};
-
+export const dummyUser =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 export const img =
   "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 export default function TopBar({}: Props) {
   const [theme, setTheme] = useState("light");
-
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme) {
@@ -80,8 +82,12 @@ export default function TopBar({}: Props) {
         <AiOutlineMail className="nav-icon" />
         <IoIosNotifications className="nav-icon" />
         <div className="items-center gap-[10px] font-bold hidden lg:flex  ">
-          <img className="profile-avatar" src={img} alt="" />
-          <span>{"Mizan"}</span>
+          <img
+            className="profile-avatar"
+            src={user?.profilePic ? user?.profilePic : dummyUser}
+            alt=""
+          />
+          <span>{user?.userName}</span>
         </div>
       </div>
     </div>
