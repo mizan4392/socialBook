@@ -12,4 +12,5 @@ export const environment = {
     entities: [],
     synchronize: true,
   },
+  jwtSecrete: 'my-secrete',
 };

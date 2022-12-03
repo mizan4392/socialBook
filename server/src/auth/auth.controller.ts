@@ -11,10 +11,8 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiBody, ApiOperation, ApiProperty } from '@nestjs/swagger';
-import { ReferenceObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { Response } from 'express';
 
-import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
@@ -28,10 +26,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(
-    @Body() body: LoginDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+  async login(@Body() body: LoginDto) {
     const user = await this.userService.findByUserNameOrEmail(body.userName);
 
     if (!user) {
@@ -49,12 +44,10 @@ export class AuthController {
       userName: user.userName,
       id: user.id,
     };
-    res
-      .cookie('access-token', this.jwtTokenService.sign(payload), {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(payload);
+
+    return {
+      jwt: this.jwtTokenService.sign(payload),
+    };
   }
 
   @ApiOperation({

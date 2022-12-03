@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Feed from "./components/Feed/Feed.component";
 import Login from "./pages/Login/Login.page";
@@ -13,50 +13,22 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import LeftBar from "./components/sideBar/LeftBar.component";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { UserContext, UserI } from "./context/UserContext";
+import { get } from "./utils/http";
 
 function App() {
-  const queryClient = new QueryClient();
-  const currentUser = true;
   const [user, setCurrentUser] = useState<UserI | undefined>();
-  const ProtectedRoute = ({ children }: any) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-    return children;
-  };
-  const Layout = () => {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <TopBar />
-        <div className="flex">
-          <LeftBar />
-          <div
-            style={{ flex: 6 }}
-            className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:text-white dark:bg-gray-800"
-          >
-            <Outlet />
-          </div>
-
-          <RightBar />
-        </div>
-      </QueryClientProvider>
-    );
-  };
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      ),
+      element: <Layout />,
       children: [
         {
           path: "/",
@@ -89,3 +61,44 @@ function App() {
 }
 
 export default App;
+
+const Layout = () => {
+  const queryClient = new QueryClient();
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      (async () => {
+        const res = await get("/user/get-logged-in-userInfo");
+
+        if (res.ok) {
+          const data = await res.json();
+          setUser && setUser(data);
+        } else {
+          navigate("/login");
+        }
+      })();
+    } else {
+      navigate("/login");
+    }
+    console.log("token", token);
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TopBar />
+      <div className="flex">
+        <LeftBar />
+        <div
+          style={{ flex: 6 }}
+          className="no-scrollbar sticky top-[70px] h-[calc(100vh-70px)] overflow-scroll dark:text-white dark:bg-gray-800"
+        >
+          <Outlet />
+        </div>
+
+        <RightBar />
+      </div>
+    </QueryClientProvider>
+  );
+};

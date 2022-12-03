@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+
 import { CORE_API_URL } from "../../utils/environment";
 import "./Login.css";
 type Props = {};
@@ -12,7 +12,7 @@ export default function Login({}: Props) {
     userName: "",
     password: "",
   });
-  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
   const notify = (message: string) => toast(message);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +26,13 @@ export default function Login({}: Props) {
     e.preventDefault();
     axios
       .post(`${CORE_API_URL}/auth/login`, loginPayload, {
-        // withCredentials: true,
+        withCredentials: true,
       })
       .then((response) => {
+        localStorage.setItem("access_token", response.data.jwt);
         navigate("/");
-        setUser && setUser(response.data);
       })
       .catch((error) => {
-        console.log("error", error);
         const {
           response: {
             data: { message },
@@ -47,7 +46,7 @@ export default function Login({}: Props) {
   return (
     <div className="h-[100vh] bg-[#C7D1F7] flex items-center justify-center ">
       <div className="flex text-white bg-white w-[50%] rounded-lg min-h-[600px] gap-[30px] overflow-hidden	">
-        <div className="left flex-1 flex flex-col p-[50px]  ">
+        <div className=" left flex-1 flex flex-col p-[50px]  ">
           <h1 className="text-[100px] leading-[100px] text-white">
             Hello World.
           </h1>
