@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Follow } from 'src/follow/entities/follow.entity';
 import { User } from 'src/user/entities/user.entity';
-import { getRepository, In, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
-
+const moment = require('moment');
 @Injectable()
 export class PostService {
   constructor(
@@ -17,8 +19,11 @@ export class PostService {
     @InjectRepository(Follow)
     private readonly followRepo: Repository<Follow>,
   ) {}
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  create(createPostDto: CreatePostDto, user) {
+    createPostDto.user = user;
+    createPostDto.createdAt = moment().format('YYYY-MM-DD hh:mm:ss');
+
+    return this.postRepo.save(createPostDto);
   }
 
   findAll() {
@@ -52,7 +57,7 @@ export class PostService {
       following.forEach((f) => ids.push(f.followerUser.id));
     }
 
-    const res = await this.postRepo.find({
+    return this.postRepo.find({
       where: {
         user: {
           id: In(ids),
@@ -63,7 +68,5 @@ export class PostService {
         createdAt: 'DESC',
       },
     });
-    console.log('res', res);
-    return res;
   }
 }

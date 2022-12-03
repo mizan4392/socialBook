@@ -61,9 +61,8 @@ function App() {
 }
 
 export default App;
-
+export const queryClient = new QueryClient();
 const Layout = () => {
-  const queryClient = new QueryClient();
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   useEffect(() => {

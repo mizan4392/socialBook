@@ -26,7 +26,7 @@ export default function Post({ post }: Props) {
 
   return (
     <div
-      className="post shadow dark:bg-gray-800 dark:text-white"
+      className="shadow dark:bg-gray-800 dark:text-white"
       style={{
         borderRadius: "20px",
       }}
