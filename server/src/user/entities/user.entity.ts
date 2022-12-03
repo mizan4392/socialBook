@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export type UserDocument = User & Document;
@@ -25,12 +24,6 @@ export class User {
 
   @Column({ type: 'varchar', nullable: true })
   coverPic: string;
-
-  @Column({ type: 'json', nullable: true })
-  followers: string[];
-
-  @Column({ type: 'json', nullable: true })
-  following: string[];
 
   @Column({ type: 'boolean', nullable: true })
   isAdmin: boolean;

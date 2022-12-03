@@ -12,7 +12,8 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from 'src/guards/AuthGuard.guard';
+import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
+import { User } from './entities/user.entity';
 
 //TODO: need to add a global userNotfound middleware
 @Controller('user')
@@ -22,6 +23,12 @@ export class UserController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     // return this.userService.create(createUserDto);
+  }
+
+  @Get('get-logged-in-userInfo')
+  @UseGuards(AuthGuard)
+  getLoggedInUser(@CurrentUser() user: User) {
+    return this.userService.findByUserId(user.id);
   }
 
   @Get()

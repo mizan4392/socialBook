@@ -2,24 +2,28 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Posts } from "../../data";
 import { makeRequest } from "../../utils/axios";
+import { fetchPosts } from "../../utils/http/post.http";
 import Post from "./Post.component";
 type Props = {};
 
 export default function PostWrapper({}: Props) {
-  const { isLoading, error, data } = useQuery(["posts"], () => {
-    return makeRequest.get("post").then((res) => res.data);
-  });
+  const { isLoading, isError, error, data }: any = useQuery(
+    ["posts"],
+    fetchPosts
+  );
 
-  console.log("data", data);
+  if (isLoading) {
+    return <div>loading</div>;
+  }
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
   return (
     <div className="flex flex-col gap-[50px] ">
-      {isLoading ? (
-        <p>loading</p>
-      ) : (
+      {data &&
         data?.map((itm: any) => {
           return <Post post={itm} key={itm.id} />;
-        })
-      )}
+        })}
     </div>
   );
 }

@@ -1,6 +1,13 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  createParamDecorator,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { User } from 'src/user/entities/user.entity';
+import { getConnection, getRepository } from 'typeorm';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -10,9 +17,28 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers['authorization'];
-    const jwt = token.split(' ')[1];
-    const user = this.jwtService.decode(jwt);
-    console.log('user->>', user);
-    return true;
+
+    if (token) {
+      const parts = token.split(' ');
+
+      if (parts?.length === 2) {
+        const jwt = parts[1];
+        const user = this.jwtService.decode(jwt);
+        request.user = user;
+        return true;
+      }
+    }
+
+    return false;
   }
 }
+
+const CurrentUserDecorator = createParamDecorator(
+  (data: unknown, context: ExecutionContext): User => {
+    const request = context.switchToHttp().getRequest();
+    const user = request.user as User;
+    return user;
+  },
+);
+
+export const CurrentUser = () => CurrentUserDecorator();

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -18,6 +18,8 @@ import { Follow } from './follow/entities/follow.entity';
 import { Story } from './stories/entities/story.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { JwtModule } from '@nestjs/jwt';
+import { GlobalModule } from './global.module';
 
 config();
 
@@ -26,6 +28,7 @@ const ormConfig = {
   entities: [User, Post, Comment, Like, Follow, Story],
 } as TypeOrmModuleOptions;
 
+@Global()
 @Module({
   imports: [
     TypeOrmModule.forRoot(ormConfig),
@@ -35,6 +38,11 @@ const ormConfig = {
     LikeModule,
     AuthModule,
     UserModule,
+    JwtModule.register({
+      secret: environment.jwtSecrete,
+      signOptions: { expiresIn: '8h' },
+    }),
+    GlobalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

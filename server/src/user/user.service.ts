@@ -28,6 +28,14 @@ export class UserService {
     return userQuery.getOne();
   }
 
+  findByUserId(userId) {
+    return this.userRepo.findOne({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   createUser(userInfo: Partial<CreateUserDto>) {
     return this.userRepo.save(userInfo);
   }
