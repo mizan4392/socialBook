@@ -3,11 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Follow } from 'src/follow/entities/follow.entity';
+import { LocalStorageService } from 'src/storage.service';
 import { User } from 'src/user/entities/user.entity';
 import { In, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
+import { v4 as uuidv4 } from 'uuid';
 const moment = require('moment');
 @Injectable()
 export class PostService {
@@ -18,10 +20,19 @@ export class PostService {
     private readonly userRepo: Repository<User>,
     @InjectRepository(Follow)
     private readonly followRepo: Repository<Follow>,
+
+    private readonly storageService: LocalStorageService,
   ) {}
-  create(createPostDto: CreatePostDto, user) {
+  async create(createPostDto: CreatePostDto, file, user) {
     createPostDto.user = user;
     createPostDto.createdAt = moment().format('YYYY-MM-DD hh:mm:ss');
+    if (file) {
+      const fileUrl = `/posts/${user.id}/${uuidv4()}_${file.originalname
+        .split(' ')
+        .join('_')}`;
+      await this.storageService.putFile(file, fileUrl);
+      createPostDto.postImage = fileUrl;
+    }
 
     return this.postRepo.save(createPostDto);
   }

@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 
 import { FiMoreVertical } from "react-icons/fi";
@@ -9,6 +10,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { PostI, Users } from "../../data";
+import { CORE_STORAGE_URL } from "../../utils/environment";
 import Comments from "../comment/Comments.component";
 type Props = {
   post?: any;
@@ -46,7 +48,9 @@ export default function Post({ post }: Props) {
               >
                 <span className="name font-medium">{post.user.userName}</span>
               </Link>
-              <span className="date text-[12px]">1min ago</span>
+              <span className="date text-[12px]">
+                {moment(post.createdAt).fromNow()}
+              </span>
             </div>
           </div>
           <div>
@@ -62,7 +66,7 @@ export default function Post({ post }: Props) {
           <p>{post?.description}</p>
           <img
             className="w-full max-h-[500px] object-cover"
-            src={post?.postImage}
+            src={`${CORE_STORAGE_URL}/${post?.postImage}`}
           />
         </div>
         <div className="info flex items-center gap-[20px]">

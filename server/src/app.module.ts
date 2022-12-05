@@ -20,6 +20,8 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { GlobalModule } from './global.module';
+import { LocalStorageService } from './storage.service';
+import { StorageController } from './storage.controller';
 
 config();
 
@@ -44,7 +46,8 @@ const ormConfig = {
     }),
     GlobalModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, StorageController],
+  providers: [AppService, LocalStorageService],
+  exports: [LocalStorageService],
 })
 export class AppModule {}

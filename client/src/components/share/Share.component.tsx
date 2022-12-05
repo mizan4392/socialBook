@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiTwotoneTag } from "react-icons/ai";
 import { IoMdPhotos } from "react-icons/io";
 import { HiLocationMarker } from "react-icons/hi";
@@ -22,6 +22,8 @@ export default function Share({}: Props) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["posts"]);
+        setFile(undefined);
+        setDescription("");
       },
     }
   );
@@ -81,7 +83,10 @@ export default function Share({}: Props) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              mutation.mutate({ description });
+              const formData = new FormData();
+              formData.append("description", description);
+              formData.append("file", file);
+              mutation.mutate(formData);
             }}
             className="border-none px-5 py-1  rounded-md bg-purple-500 font-medium mr-[20px] cursor-pointer text-white"
           >
