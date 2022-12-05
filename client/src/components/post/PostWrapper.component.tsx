@@ -18,6 +18,7 @@ export default function PostWrapper({}: Props) {
   if (isError) {
     return <div>{error.message}</div>;
   }
+
   return (
     <div className="flex flex-col gap-[50px] ">
       {data &&

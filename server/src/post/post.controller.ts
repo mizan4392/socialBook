@@ -8,12 +8,15 @@ import {
   Delete,
   UseGuards,
   BadRequestException,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('post')
 @UseGuards(AuthGuard)
@@ -27,8 +30,13 @@ export class PostController {
     type: CreatePostDto,
   })
   @Post()
-  create(@Body() createPostDto: CreatePostDto, @CurrentUser() user) {
-    return this.postService.create(createPostDto, user);
+  @UseInterceptors(FileInterceptor('file'))
+  create(
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+    @CurrentUser() user,
+  ) {
+    return this.postService.create(createPostDto, file, user);
   }
 
   @ApiOperation({

@@ -19,8 +19,8 @@ export class Post {
     required: false,
   })
   @IsOptional()
-  @Column({ type: 'json', nullable: true })
-  postImage?: string[];
+  @Column({ type: 'varchar', nullable: true })
+  postImage?: string;
 
   @ApiProperty({
     required: true,
