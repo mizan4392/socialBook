@@ -81,7 +81,6 @@ const Layout = () => {
     } else {
       navigate("/login");
     }
-    console.log("token", token);
   }, []);
 
   return (
