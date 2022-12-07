@@ -4,12 +4,14 @@ import { Posts } from "../../data";
 import { makeRequest } from "../../utils/axios";
 import { fetchPosts } from "../../utils/http/post.http";
 import Post from "./Post.component";
-type Props = {};
+type Props = {
+  isProfile?: boolean;
+};
 
-export default function PostWrapper({}: Props) {
+export default function PostWrapper({ isProfile = false }: Props) {
   const { isLoading, isError, error, data }: any = useQuery(
-    ["posts"],
-    fetchPosts
+    [isProfile ? "personalPosts" : "posts"],
+    () => fetchPosts(isProfile)
   );
 
   if (isLoading) {

@@ -52,7 +52,23 @@ export class PostService {
   remove(id: number) {
     return `This action removes a #${id} post`;
   }
-
+  async getLoggedInUserPosts(userId) {
+    const posts = await this.postRepo.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      relations: ['user', 'comments', 'likes', 'likes.user'],
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+    posts?.map((itm: any) => {
+      itm.comments = itm.comments?.length | 0;
+    });
+    return posts;
+  }
   async loggedInUserNewsFeedPost(userId) {
     const following = await this.followRepo.find({
       where: {

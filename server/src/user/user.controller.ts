@@ -8,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UseGuards,
+  Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -46,9 +48,13 @@ export class UserController {
   //   console.log('id', +id);
   // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    // return this.userService.findOne(id);
+  @Get('user-by-id')
+  @UseGuards(AuthGuard)
+  findOne(@Query('userId') userId: string) {
+    if (!userId) {
+      throw new BadRequestException('userId is required');
+    }
+    return this.userService.findByUserId(userId);
   }
 
   @Patch(':id')
