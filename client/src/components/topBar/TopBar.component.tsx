@@ -21,6 +21,9 @@ export const dummyUser =
 export const img =
   "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
+export const dummyCover =
+  "https://w7.pngwing.com/pngs/340/956/png-transparent-profile-user-icon-computer-icons-user-profile-head-ico-miscellaneous-black-desktop-wallpaper.png";
+
 export default function TopBar({}: Props) {
   const [theme, setTheme] = useState("light");
   const { user } = useContext(UserContext);

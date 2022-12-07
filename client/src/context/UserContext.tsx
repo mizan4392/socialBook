@@ -14,6 +14,15 @@ export interface UserI {
   isAdmin: boolean;
   profilePic: string;
   userName: string;
+  website: string;
+  faceBook: string;
+  instagram: string;
+
+  twitter: string;
+
+  linkedIn: string;
+
+  pinterest: string;
 }
 
 export interface UserContextI {

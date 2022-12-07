@@ -84,7 +84,7 @@ export default function Post({ post }: Props) {
             />
             <div className="details flex flex-col">
               <Link
-                to={`/profile/${post?.userId}`}
+                to={`/profile/${post?.user?.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <span className="name font-medium">{post.user.userName}</span>

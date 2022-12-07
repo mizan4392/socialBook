@@ -47,6 +47,14 @@ export class PostController {
     return this.postService.loggedInUserNewsFeedPost(user.id);
   }
 
+  @ApiOperation({
+    summary: 'get-logged-in-user-news-feed-post',
+  })
+  @Get('get-logged-in-user-posts')
+  getLoggedInUserPosts(@CurrentUser() user) {
+    return this.postService.getLoggedInUserPosts(user.id);
+  }
+
   @Get()
   findAll() {
     return this.postService.findAll();

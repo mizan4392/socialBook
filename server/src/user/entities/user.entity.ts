@@ -37,6 +37,21 @@ export class User {
   @Column({ type: 'varchar', nullable: true })
   address: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  website: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  faceBook: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  instagram: string;
+  @Column({ type: 'varchar', nullable: true })
+  twitter: string;
+  @Column({ type: 'varchar', nullable: true })
+  linkedIn: string;
+  @Column({ type: 'varchar', nullable: true })
+  pinterest: string;
+
   @Column({ type: 'timestamp', nullable: true })
   createdAt: Date;
 }
