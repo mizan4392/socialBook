@@ -8,6 +8,7 @@ import { dummyUser } from "../topBar/TopBar.component";
 import { useMutation } from "react-query";
 import { queryClient } from "../../App";
 import { makeRequest } from "../../utils/axios";
+import { CORE_STORAGE_URL } from "../../utils/environment";
 type Props = {};
 
 export default function Share({}: Props) {
@@ -34,7 +35,11 @@ export default function Share({}: Props) {
         <div className="flex items-center">
           <img
             className="w-[50px] h-[50px] rounded-md mr-10 "
-            src={user?.profilePic ? user?.profilePic : dummyUser}
+            src={
+              user?.profilePic
+                ? `${CORE_STORAGE_URL}/${user?.profilePic}`
+                : dummyUser
+            }
             alt=""
           />
           <input

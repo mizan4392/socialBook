@@ -1,8 +1,11 @@
+import moment from "moment";
 import React from "react";
 import { CommentDataI } from "../../data";
+import { CORE_STORAGE_URL } from "../../utils/environment";
+import { dummyUser } from "../topBar/TopBar.component";
 
 type Props = {
-  comment: CommentDataI;
+  comment: any;
 };
 
 export default function Comment({ comment }: Props) {
@@ -13,10 +16,18 @@ export default function Comment({ comment }: Props) {
         margin: "30px 0px",
       }}
     >
-      <img src={comment.profilePicture} alt="a" className="profile-avatar" />
+      <img
+        src={
+          comment?.user?.profilePic
+            ? `${CORE_STORAGE_URL}/${comment?.user?.profilePic}`
+            : dummyUser
+        }
+        alt="a"
+        className="profile-avatar"
+      />
       <div className="info flex flex-col gap-[3px] items-start ">
-        <span className="font-medium">{comment.name}</span>
-        <p className="">{comment.desc}</p>
+        <span className="font-medium">{comment.user.userName}</span>
+        <p className="">{comment.description}</p>
       </div>
       <span
         className="date text-gray-500 dark:text-white "
@@ -27,7 +38,7 @@ export default function Comment({ comment }: Props) {
           fontSize: "12px",
         }}
       >
-        1h ago{" "}
+        {moment(comment.createdAt).fromNow()}
       </span>
     </div>
   );

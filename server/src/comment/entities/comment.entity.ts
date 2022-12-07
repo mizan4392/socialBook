@@ -1,21 +1,23 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { Post } from 'src/post/entities/post.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Post } from './post.entity';
 
 @Entity()
 export class Comment {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  description?: string;
+  @Column({ type: 'varchar', nullable: false })
+  description: string;
 
   @Column({ type: 'timestamp', nullable: true })
   createdAt?: string;
 
   @ManyToOne((e) => User)
-  user: User;
+  user?: User;
 
   @ManyToOne((e) => Post)
-  post: Post;
+  post?: Post;
 }

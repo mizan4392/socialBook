@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { PostI, Users } from "../../data";
 import { CORE_STORAGE_URL } from "../../utils/environment";
 import Comments from "../comment/Comments.component";
+import { dummyUser } from "../topBar/TopBar.component";
 type Props = {
   post?: any;
 };
@@ -37,7 +38,11 @@ export default function Post({ post }: Props) {
         <div className="user flex items-center justify-between">
           <div className="user-info flex gap-[20px] ">
             <img
-              src={post?.user.profilePic}
+              src={
+                post?.user?.profilePic
+                  ? `${CORE_STORAGE_URL}${post?.user?.profilePic}`
+                  : dummyUser
+              }
               className="profile-avatar"
               alt="s"
             />
@@ -90,7 +95,7 @@ export default function Post({ post }: Props) {
             12 share
           </div>
         </div>
-        {isCommentOpen ? <Comments /> : null}
+        {isCommentOpen ? <Comments postId={post?.id} /> : null}
       </div>
     </div>
   );
