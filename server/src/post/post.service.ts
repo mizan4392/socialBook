@@ -68,16 +68,21 @@ export class PostService {
       following.forEach((f) => ids.push(f.followerUser.id));
     }
 
-    return this.postRepo.find({
+    const posts = await this.postRepo.find({
       where: {
         user: {
           id: In(ids),
         },
       },
-      relations: ['user'],
+      relations: ['user', 'comments', 'likes', 'likes.user'],
       order: {
         createdAt: 'DESC',
       },
     });
+    posts?.map((itm: any) => {
+      itm.comments = itm.comments?.length | 0;
+    });
+
+    return posts;
   }
 }

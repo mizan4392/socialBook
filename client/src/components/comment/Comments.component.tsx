@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../../App";
 import { UserContext } from "../../context/UserContext";
@@ -11,14 +11,21 @@ import Comment from "./Comment.component";
 
 type Props = {
   postId: number;
+  setUpdatedCommentCount: (commentCount: number) => void;
 };
 
-export default function Comments({ postId }: Props) {
+export default function Comments({ postId, setUpdatedCommentCount }: Props) {
   const { user } = useContext(UserContext);
   const [description, setDescription] = useState("");
   const { isLoading, isError, error, data }: any = useQuery(["comments"], () =>
     fetchCommentByPostId(postId)
   );
+
+  useEffect(() => {
+    if (data?.length) {
+      setUpdatedCommentCount(data?.length);
+    }
+  }, [data]);
 
   const mutation: any = useMutation(
     (newComment) => {

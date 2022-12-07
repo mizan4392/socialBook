@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
+import { Comment } from 'src/comment/entities/comment.entity';
 import { Follow } from 'src/follow/entities/follow.entity';
+import { Like } from 'src/like/entities/like.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -34,4 +36,10 @@ export class Post {
 
   @ManyToOne((e) => User)
   user: User;
+
+  @OneToMany(() => Comment, (c) => c.post)
+  comments: Comment[];
+
+  @OneToMany(() => Like, (l) => l.post)
+  likes: Like[];
 }
