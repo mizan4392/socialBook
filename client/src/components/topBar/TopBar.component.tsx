@@ -13,6 +13,7 @@ import { TiHomeOutline } from "react-icons/ti";
 
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { CORE_API_URL, CORE_STORAGE_URL } from "../../utils/environment";
 const { Search } = Input;
 type Props = {};
 export const dummyUser =
@@ -84,7 +85,11 @@ export default function TopBar({}: Props) {
         <div className="items-center gap-[10px] font-bold hidden lg:flex  ">
           <img
             className="profile-avatar"
-            src={user?.profilePic ? user?.profilePic : dummyUser}
+            src={
+              user?.profilePic
+                ? `${CORE_STORAGE_URL}${user?.profilePic}`
+                : dummyUser
+            }
             alt=""
           />
           <span>{user?.userName}</span>

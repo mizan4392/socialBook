@@ -25,7 +25,7 @@ export class PostService {
   ) {}
   async create(createPostDto: CreatePostDto, file, user) {
     createPostDto.user = user;
-    createPostDto.createdAt = moment().format('YYYY-MM-DD hh:mm:ss');
+    createPostDto.createdAt = moment().utc().format('YYYY-MM-DD hh:mm:ss');
     if (file) {
       const fileUrl = `/posts/${user.id}/${uuidv4()}_${file.originalname
         .split(' ')

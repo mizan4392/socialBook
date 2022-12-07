@@ -12,7 +12,7 @@ import { StoriesModule } from './stories/stories.module';
 import { FollowModule } from './follow/follow.module';
 import { LikeModule } from './like/like.module';
 import { Post } from './post/entities/post.entity';
-import { Comment } from './post/entities/comment.entity';
+
 import { Like } from './like/entities/like.entity';
 import { Follow } from './follow/entities/follow.entity';
 import { Story } from './stories/entities/story.entity';
@@ -22,6 +22,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { GlobalModule } from './global.module';
 import { LocalStorageService } from './storage.service';
 import { StorageController } from './storage.controller';
+import { CommentModule } from './comment/comment.module';
+import { Comment } from './comment/entities/comment.entity';
 
 config();
 
@@ -45,6 +47,7 @@ const ormConfig = {
       signOptions: { expiresIn: '8h' },
     }),
     GlobalModule,
+    CommentModule,
   ],
   controllers: [AppController, StorageController],
   providers: [AppService, LocalStorageService],
