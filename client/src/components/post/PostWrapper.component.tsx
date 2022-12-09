@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
 import { Posts } from "../../data";
 import { makeRequest } from "../../utils/axios";
 import { fetchPosts } from "../../utils/http/post.http";
@@ -9,9 +10,14 @@ type Props = {
 };
 
 export default function PostWrapper({ isProfile = false }: Props) {
+  const location = useLocation();
   const { isLoading, isError, error, data }: any = useQuery(
     [isProfile ? "personalPosts" : "posts"],
-    () => fetchPosts(isProfile)
+    () => {
+      const parts = location?.pathname?.split("/");
+      const id = parts[parts.length - 1];
+      return fetchPosts(isProfile ? id : null);
+    }
   );
 
   if (isLoading) {

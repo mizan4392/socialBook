@@ -10,6 +10,7 @@ import {
   BadRequestException,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -51,8 +52,12 @@ export class PostController {
     summary: 'get-logged-in-user-news-feed-post',
   })
   @Get('get-logged-in-user-posts')
-  getLoggedInUserPosts(@CurrentUser() user) {
-    return this.postService.getLoggedInUserPosts(user.id);
+  getLoggedInUserPosts(@Query('userId') userId) {
+    if (userId) {
+      throw new BadRequestException('userId is required');
+    }
+
+    return this.postService.getLoggedInUserPosts(userId);
   }
 
   @Get()

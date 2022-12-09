@@ -1,9 +1,9 @@
 import { makeRequest } from "../axios";
 
-export const fetchPosts = (isProfile: boolean) => {
-  if (isProfile) {
+export const fetchPosts = (userId: any) => {
+  if (userId) {
     return makeRequest
-      .get("/post/get-logged-in-user-posts")
+      .get(`/post/get-logged-in-user-posts?userId=${userId}`)
       .then((res) => res.data);
   } else {
     return makeRequest
