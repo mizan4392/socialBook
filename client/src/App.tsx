@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { UserContext, UserI } from "./context/UserContext";
 import { get } from "./utils/http";
+import "react-responsive-modal/styles.css";
 
 function App() {
   const [user, setCurrentUser] = useState<UserI | undefined>();

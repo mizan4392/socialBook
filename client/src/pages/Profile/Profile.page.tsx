@@ -13,14 +13,15 @@ import {
   MdMoreVert,
 } from "react-icons/md";
 import { useMutation, useQuery } from "react-query";
-import { useLocation, useSearchParams } from "react-router-dom";
+import Modal from "react-responsive-modal";
+import { useLocation } from "react-router-dom";
 import { queryClient } from "../../App";
-
 import PostWrapper from "../../components/post/PostWrapper.component";
 import {
   dummyCover,
   dummyUser,
 } from "../../components/topBar/TopBar.component";
+import UpdateUserInfoModal from "../../components/updateUserInfo/updateUserInfoModal.component";
 import { UserContext, UserI } from "../../context/UserContext";
 import { makeRequest } from "../../utils/axios";
 import { CORE_STORAGE_URL } from "../../utils/environment";
@@ -29,8 +30,10 @@ type Props = {};
 
 export default function Profile({}: Props) {
   const [user, setUser] = useState<UserI>();
+  const [updateUserVisible, setUpdateUserVisible] = useState<boolean>(false);
   const userContext = useContext(UserContext);
   const location = useLocation();
+
   const getUserId = () => {
     if (location?.pathname) {
       const parts = location?.pathname?.split("/");
@@ -80,6 +83,9 @@ export default function Profile({}: Props) {
 
   useEffect(() => {
     if (data) {
+      if (userContext?.user?.id === user?.id) {
+        userContext?.setUser && userContext?.setUser(data);
+      }
       setUser(data);
     }
   }, [data]);
@@ -145,7 +151,7 @@ export default function Profile({}: Props) {
             className=" flex flex-col items-center gap-[10px]"
             style={{ flex: 1 }}
           >
-            <span className="text-[30px] font-medium">{user?.userName}</span>
+            <span className="text-[30px] font-medium">@{user?.userName}</span>
             <div className=" w-full flex items-center justify-around">
               <div className=" flex items-center gap-[5px]">
                 <MdLocationPin />
@@ -162,6 +168,7 @@ export default function Profile({}: Props) {
               <button
                 className="border-none bg-[#5271ff] text-white cursor-pointer"
                 style={{ borderRadius: "5px", padding: "10px 20px" }}
+                onClick={() => setUpdateUserVisible(true)}
               >
                 Update
               </button>
@@ -206,6 +213,9 @@ export default function Profile({}: Props) {
         </div>
         <PostWrapper isProfile={true} />
       </div>
+      {updateUserVisible ? (
+        <UpdateUserInfoModal onClose={() => setUpdateUserVisible(false)} />
+      ) : null}
     </div>
   );
 }

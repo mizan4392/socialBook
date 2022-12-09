@@ -52,7 +52,7 @@ export default function Share({}: Props) {
         <hr className="m-[20px]" />
         {file ? <img src={URL.createObjectURL(file)} alt="" /> : null}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-3">
           <input
             type={"file"}
             id="file"
@@ -91,6 +91,7 @@ export default function Share({}: Props) {
               const formData = new FormData();
               formData.append("description", description);
               formData.append("file", file);
+
               mutation.mutate(formData);
             }}
             className="border-none px-5 py-1  rounded-md bg-purple-500 font-medium mr-[20px] cursor-pointer text-white"

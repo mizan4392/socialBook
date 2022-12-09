@@ -53,7 +53,7 @@ export class PostController {
   })
   @Get('get-logged-in-user-posts')
   getLoggedInUserPosts(@Query('userId') userId) {
-    if (userId) {
+    if (!userId) {
       throw new BadRequestException('userId is required');
     }
 
@@ -75,8 +75,8 @@ export class PostController {
     return this.postService.update(+id, updatePostDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+  @Delete()
+  remove(@Query('postId') postId: string) {
+    return this.postService.remove(+postId);
   }
 }
