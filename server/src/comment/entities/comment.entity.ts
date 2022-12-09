@@ -18,6 +18,6 @@ export class Comment {
   @ManyToOne((e) => User)
   user?: User;
 
-  @ManyToOne((e) => Post)
+  @ManyToOne((e) => Post, { onDelete: 'CASCADE' })
   post?: Post;
 }

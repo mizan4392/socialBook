@@ -49,8 +49,15 @@ export class PostService {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(postId: number) {
+    const post = await this.postRepo.findOne({ where: { id: postId } });
+    const res = await this.postRepo.delete({ id: postId });
+    if (res.affected) {
+      if (post.postImage) {
+        this.storageService.deleteFile(post.postImage);
+      }
+    }
+    return res;
   }
   async getLoggedInUserPosts(userId) {
     const posts = await this.postRepo.find({

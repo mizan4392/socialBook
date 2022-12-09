@@ -11,7 +11,7 @@ type Props = {
 
 export default function PostWrapper({ isProfile = false }: Props) {
   const location = useLocation();
-  const { isLoading, isError, error, data }: any = useQuery(
+  const { isLoading, isError, error, data, isFetching }: any = useQuery(
     [isProfile ? "personalPosts" : "posts"],
     () => {
       const parts = location?.pathname?.split("/");
@@ -19,20 +19,18 @@ export default function PostWrapper({ isProfile = false }: Props) {
       return fetchPosts(isProfile ? id : null);
     }
   );
-
-  if (isLoading) {
-    return <div>loading</div>;
-  }
   if (isError) {
     return <div>{error.message}</div>;
   }
 
   return (
     <div className="flex flex-col gap-[50px] ">
-      {data &&
-        data?.map((itm: any) => {
-          return <Post post={itm} key={itm.id} />;
-        })}
+      {isFetching
+        ? "Loading..."
+        : data &&
+          data?.map((itm: any) => {
+            return <Post post={itm} key={itm.id} />;
+          })}
     </div>
   );
 }

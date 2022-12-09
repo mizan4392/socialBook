@@ -10,7 +10,7 @@ export class Like {
   @ManyToOne((e) => User)
   user: User;
 
-  @ManyToOne((e) => Post)
+  @ManyToOne((e) => Post, { onDelete: 'CASCADE' })
   post: Post;
 
   @Column({ type: 'timestamp', nullable: true })

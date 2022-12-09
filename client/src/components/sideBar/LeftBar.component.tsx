@@ -28,6 +28,8 @@ import Courses from "../../../assets/12.png";
 import Fund from "../../../assets/13.png";
 import "./LeftBar.css";
 import { UserContext } from "../../context/UserContext";
+import { CORE_STORAGE_URL } from "../../utils/environment";
+import { Link } from "react-router-dom";
 export default function LeftBar({}: Props) {
   const { user } = useContext(UserContext);
   const itmes = [
@@ -94,11 +96,15 @@ export default function LeftBar({}: Props) {
         <div className="flex flex-col gap-[20px]">
           <div className="flex gap-[10px]">
             <img
-              src={user?.profilePic ? user?.profilePic : dummyUser}
+              src={
+                user?.profilePic
+                  ? `${CORE_STORAGE_URL}/${user?.profilePic}`
+                  : dummyUser
+              }
               alt=""
               className="profile-avatar"
             />
-            <span>{user?.userName}</span>
+            <Link to={`/profile/${user?.id}`}>{user?.userName}</Link>
           </div>
           {itmes.slice(0, 5).map((itm, i) => {
             return (

@@ -1,8 +1,8 @@
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 
-import { FiMoreVertical } from "react-icons/fi";
 import {
+  MdDelete,
   MdOutlineFavorite,
   MdOutlineFavoriteBorder,
   MdOutlineTextsms,
@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
+import { queryClient } from "../../App";
 import { UserContext } from "../../context/UserContext";
 import { makeRequest } from "../../utils/axios";
 import { CORE_STORAGE_URL } from "../../utils/environment";
@@ -40,6 +41,16 @@ export default function Post({ post }: Props) {
           setLike(true);
           setLikes((like) => like + 1);
         }
+      },
+    }
+  );
+
+  const deleteMutation: any = useMutation(
+    (data: any) => makeRequest.delete(`/post?postId=${data.postId}`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
+        queryClient.invalidateQueries(["personalPosts"]);
       },
     }
   );
@@ -94,9 +105,19 @@ export default function Post({ post }: Props) {
               </span>
             </div>
           </div>
-          <div>
-            <FiMoreVertical />
-          </div>
+          {user?.id === post?.user?.id ? (
+            <div
+              className="cursor-pointer text-red-600"
+              onClick={(e) => {
+                e.preventDefault();
+                deleteMutation.mutate({
+                  postId: post.id,
+                });
+              }}
+            >
+              <MdDelete />
+            </div>
+          ) : null}
         </div>
         <div
           className="content "

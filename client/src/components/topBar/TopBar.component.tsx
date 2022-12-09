@@ -27,6 +27,7 @@ export const dummyCover =
 export default function TopBar({}: Props) {
   const [theme, setTheme] = useState("light");
   const { user } = useContext(UserContext);
+
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme) {
@@ -90,7 +91,7 @@ export default function TopBar({}: Props) {
             className="profile-avatar"
             src={
               user?.profilePic
-                ? `${CORE_STORAGE_URL}${user?.profilePic}`
+                ? `${CORE_STORAGE_URL}/${user?.profilePic}`
                 : dummyUser
             }
             alt=""

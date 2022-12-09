@@ -10,14 +10,15 @@ import {
   UseGuards,
   Query,
   BadRequestException,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
 import { User } from './entities/user.entity';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
-//TODO: need to add a global userNotfound middleware
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -38,16 +39,6 @@ export class UserController {
     // return this.userService.findAll();
   }
 
-  // @Post('follow/:id')
-  // followUser(@Param('id') id: string) {
-  //   console.log('id', +id);
-  // }
-
-  // @Post('unFollow/:id')
-  // unFollowUser(@Param('id') id: string) {
-  //   console.log('id', +id);
-  // }
-
   @Get('user-by-id')
   @UseGuards(AuthGuard)
   findOne(@Query('userId') userId: string) {
@@ -57,9 +48,15 @@ export class UserController {
     return this.userService.findByUserId(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    // return this.userService.update(id, updateUserDto);
+  @Patch('')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FilesInterceptor('files'))
+  update(
+    @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() user,
+    @UploadedFiles() files: Express.Multer.File[] | undefined,
+  ) {
+    return this.userService.update(user?.id, updateUserDto, files);
   }
 
   //TODO: add admin validation
