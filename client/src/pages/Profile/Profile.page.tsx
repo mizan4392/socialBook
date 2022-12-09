@@ -12,8 +12,9 @@ import {
   MdLocationPin,
   MdMoreVert,
 } from "react-icons/md";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { queryClient } from "../../App";
 
 import PostWrapper from "../../components/post/PostWrapper.component";
 import {
@@ -30,18 +31,52 @@ export default function Profile({}: Props) {
   const [user, setUser] = useState<UserI>();
   const userContext = useContext(UserContext);
   const location = useLocation();
+  const getUserId = () => {
+    if (location?.pathname) {
+      const parts = location?.pathname?.split("/");
+      return parts[parts.length - 1];
+    }
+  };
   const { isLoading, isError, error, data }: any = useQuery(
     ["userInfo"],
     () => {
-      if (location?.pathname) {
-        const parts = location?.pathname?.split("/");
-        const id = parts[parts.length - 1];
+      if (getUserId()) {
         return makeRequest
-          .get(`/user/user-by-id?userId=${id}`)
+          .get(`/user/user-by-id?userId=${getUserId()}`)
           .then((res) => res.data);
       }
     }
   );
+
+  const followMutation: any = useMutation(
+    (data) => {
+      return makeRequest.post("/follow", data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["isFollowing"]);
+      },
+    }
+  );
+
+  const unFollowMutation: any = useMutation(
+    (data: any) => {
+      return makeRequest.delete(
+        `/follow?followedUserId=${data.followedUserId}`
+      );
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["isFollowing"]);
+      },
+    }
+  );
+
+  const { data: following } = useQuery(["isFollowing"], () => {
+    return makeRequest
+      .get(`follow/is-current-user-followed?followedUserId=${getUserId()}`)
+      .then((res) => res.data);
+  });
 
   useEffect(() => {
     if (data) {
@@ -123,12 +158,40 @@ export default function Profile({}: Props) {
                 </a>
               </div>
             </div>
-            <button
-              className="border-none bg-[#5271ff] text-white cursor-pointer"
-              style={{ borderRadius: "5px", padding: "10px 20px" }}
-            >
-              {userContext?.user?.id === user?.id ? "Update" : "Follow"}
-            </button>
+            {userContext?.user?.id === user?.id ? (
+              <button
+                className="border-none bg-[#5271ff] text-white cursor-pointer"
+                style={{ borderRadius: "5px", padding: "10px 20px" }}
+              >
+                Update
+              </button>
+            ) : following ? (
+              <button
+                className="border-none bg-[#5271ff] text-white cursor-pointer"
+                style={{ borderRadius: "5px", padding: "10px 20px" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  unFollowMutation.mutate({
+                    followedUserId: getUserId(),
+                  });
+                }}
+              >
+                UnFollow
+              </button>
+            ) : (
+              <button
+                className="border-none bg-[#5271ff] text-white cursor-pointer"
+                style={{ borderRadius: "5px", padding: "10px 20px" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  followMutation.mutate({
+                    followedUserId: getUserId(),
+                  });
+                }}
+              >
+                Follow
+              </button>
+            )}
           </div>
           <div
             className="flex items-center justify-end gap-[10px]"
