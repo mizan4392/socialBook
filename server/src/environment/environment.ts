@@ -13,4 +13,8 @@ export const environment = {
     synchronize: true,
   },
   jwtSecrete: 'my-secrete',
+  redis: {
+    // host: process.env.NX_REDIS_HOST,
+    port: process.env.NX_REDIS_PORT,
+  },
 };

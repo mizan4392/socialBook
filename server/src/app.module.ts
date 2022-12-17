@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { CacheModule, Global, Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -25,6 +25,9 @@ import { StorageController } from './storage.controller';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
 
+import { RadisService } from './radis.service';
+// import type { ClientOpts } from 'radis';
+
 config();
 
 const ormConfig = {
@@ -50,7 +53,7 @@ const ormConfig = {
     CommentModule,
   ],
   controllers: [AppController, StorageController],
-  providers: [AppService, LocalStorageService],
-  exports: [LocalStorageService],
+  providers: [AppService, LocalStorageService, RadisService],
+  exports: [LocalStorageService, RadisService],
 })
 export class AppModule {}
