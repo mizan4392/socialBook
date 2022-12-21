@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { CacheModule, Global, Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
@@ -26,8 +27,10 @@ import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
 
 import { RadisService } from './radis.service';
-// import type { ClientOpts } from 'radis';
-
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { EmailService } from './email.service';
+const mg = require('nodemailer-mailgun-transport');
 config();
 
 const ormConfig = {
@@ -51,9 +54,23 @@ const ormConfig = {
     }),
     GlobalModule,
     CommentModule,
+    MailerModule.forRootAsync({
+      useFactory: () => {
+        return {
+          transport: mg(environment.email.auth),
+          defaults: {
+            from: `"Firti " <${environment.email.defaultSender}>`,
+          },
+          template: {
+            dir: __dirname + '../views',
+            adapter: new HandlebarsAdapter(),
+          },
+        };
+      },
+    }),
   ],
   controllers: [AppController, StorageController],
-  providers: [AppService, LocalStorageService, RadisService],
-  exports: [LocalStorageService, RadisService],
+  providers: [AppService, LocalStorageService, RadisService, EmailService],
+  exports: [LocalStorageService, RadisService, EmailService],
 })
 export class AppModule {}

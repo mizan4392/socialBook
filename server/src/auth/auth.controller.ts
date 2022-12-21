@@ -14,6 +14,7 @@ import { ApiBody, ApiOperation, ApiProperty } from '@nestjs/swagger';
 import { Response } from 'express';
 
 import { UserService } from 'src/user/user.service';
+import { generateOtp } from 'src/utils/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 
@@ -67,6 +68,11 @@ export class AuthController {
     if (existUser) {
       throw new ConflictException('User Already exist');
     }
+    const code = await generateOtp({
+      key: 'registration',
+      data: body,
+      delTimeOut: 5 * 60 * 1000,
+    });
     //else :
     //hash password
     const hash = await this.authService.hashPassword(body.password);
