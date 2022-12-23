@@ -57,9 +57,15 @@ const ormConfig = {
     MailerModule.forRootAsync({
       useFactory: () => {
         return {
-          transport: mg(environment.email.auth),
+          transport: {
+            service: 'gmail',
+            auth: {
+              user: 'md.mizan3079@gmail.com',
+              pass: 'qxcznrullqdmgber',
+            },
+          },
           defaults: {
-            from: `"Firti " <${environment.email.defaultSender}>`,
+            from: `"Socialbook " <${environment.email.defaultSender}>`,
           },
           template: {
             dir: __dirname + '../views',

@@ -60,6 +60,7 @@ export class PostService {
     return res;
   }
   async getLoggedInUserPosts(userId) {
+    console.log(userId);
     const posts = await this.postRepo.find({
       where: {
         user: {
