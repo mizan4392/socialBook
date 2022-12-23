@@ -43,3 +43,8 @@ export class RegisterDto {
   @IsString()
   email: string;
 }
+
+export class ApiConfirmRegistration {
+  @ApiProperty({ description: 'The pin to use for confirmation.' })
+  pin: string;
+}

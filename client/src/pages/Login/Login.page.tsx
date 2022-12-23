@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Button from "../../components/Button/Button.component";
 
 import { CORE_API_URL } from "../../utils/environment";
 import "./Login.css";
@@ -12,7 +13,7 @@ export default function Login({}: Props) {
     userName: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const notify = (message: string) => toast(message);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,15 +25,20 @@ export default function Login({}: Props) {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setLoading(true);
     axios
       .post(`${CORE_API_URL}/auth/login`, loginPayload, {
         withCredentials: true,
       })
       .then((response) => {
         localStorage.setItem("access_token", response.data.jwt);
-        navigate("/");
+        setLoading(false);
+        setTimeout(() => {
+          navigate("/");
+        }, 300);
       })
       .catch((error) => {
+        setLoading(false);
         const {
           response: {
             data: { message },
@@ -93,6 +99,7 @@ export default function Login({}: Props) {
             >
               Login
             </button>
+            <Button onClick={handleClick}>Login</Button>
           </form>
         </div>
       </div>

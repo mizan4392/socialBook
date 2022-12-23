@@ -1,6 +1,6 @@
 import { Avatar, Badge, Input } from "antd";
 import React, { useContext, useEffect, useState } from "react";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineMail } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import {
   MdOutlineDarkMode,
@@ -86,18 +86,19 @@ export default function TopBar({}: Props) {
         <MdPersonPin className="nav-icon" />
         <AiOutlineMail className="nav-icon" />
         <IoIosNotifications className="nav-icon" />
-        <div className="items-center gap-[10px] font-bold hidden lg:flex  ">
-          <img
-            className="profile-avatar"
-            src={
-              user?.profilePic
-                ? `${CORE_STORAGE_URL}/${user?.profilePic}`
-                : dummyUser
-            }
-            alt=""
-          />
-          <span>{user?.userName}</span>
-        </div>
+        {user ? (
+          <button
+            onClick={() => {
+              localStorage.removeItem("access_token");
+              window.location.reload();
+            }}
+          >
+            <div className="flex justify-center items-center">
+              <AiOutlineLogin />
+              Log Out
+            </div>
+          </button>
+        ) : null}
       </div>
     </div>
   );
