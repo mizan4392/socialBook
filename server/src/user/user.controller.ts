@@ -18,6 +18,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
 import { User } from './entities/user.entity';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -28,6 +34,12 @@ export class UserController {
     // return this.userService.create(createUserDto);
   }
 
+  @ApiOperation({
+    summary: 'Fetch Logged-in UserInfo',
+  })
+  @ApiOkResponse({
+    type: User,
+  })
   @Get('get-logged-in-userInfo')
   @UseGuards(AuthGuard)
   getLoggedInUser(@CurrentUser() user: User) {
@@ -39,6 +51,21 @@ export class UserController {
     // return this.userService.findAll();
   }
 
+  @ApiOperation({
+    summary: 'Fetch userInfo by userId',
+  })
+  @ApiQuery({
+    schema: {
+      properties: {
+        userId: {
+          type: 'string',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    type: User,
+  })
   @Get('user-by-id')
   @UseGuards(AuthGuard)
   findOne(@Query('userId') userId: string) {
@@ -48,6 +75,13 @@ export class UserController {
     return this.userService.findByUserId(userId);
   }
 
+  @ApiOperation({
+    summary: 'Update a user',
+  })
+  @ApiBody({
+    type: UpdateUserDto,
+  })
+  @ApiOkResponse()
   @Patch('')
   @UseGuards(AuthGuard)
   @UseInterceptors(FilesInterceptor('files'))

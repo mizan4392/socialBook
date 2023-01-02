@@ -6,15 +6,19 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Comment {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id?: number;
 
+  @ApiProperty()
   @Column({ type: 'varchar', nullable: false })
   description: string;
 
+  @ApiProperty()
   @Column({ type: 'timestamp', nullable: true })
   createdAt?: string;
 
+  @ApiProperty()
   @ManyToOne((e) => User)
   user?: User;
 

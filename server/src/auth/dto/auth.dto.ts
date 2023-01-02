@@ -2,9 +2,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginDto {
+  @ApiProperty({
+    description: 'UserName',
+  })
   @IsNotEmpty()
   @IsString()
   userName: string;
+
+  @ApiProperty({
+    description: 'Password',
+  })
   @IsNotEmpty()
   @IsString()
   password: string;
@@ -46,5 +53,6 @@ export class RegisterDto {
 
 export class ApiConfirmRegistration {
   @ApiProperty({ description: 'The pin to use for confirmation.' })
+  @IsNotEmpty()
   pin: string;
 }

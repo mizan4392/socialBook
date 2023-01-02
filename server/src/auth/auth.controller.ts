@@ -12,6 +12,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import {
   ApiBody,
+  ApiOkResponse,
   ApiOperation,
   ApiProperty,
   ApiResponse,
@@ -33,6 +34,22 @@ export class AuthController {
     private emailService: EmailService,
   ) {}
 
+  @ApiOperation({
+    description: 'User Login',
+  })
+  @ApiBody({
+    type: LoginDto,
+  })
+  @ApiOkResponse({
+    description: 'jwt',
+    schema: {
+      properties: {
+        jwt: {
+          type: 'string',
+        },
+      },
+    },
+  })
   @Post('login')
   async login(@Body() body: LoginDto) {
     const user = await this.userService.findByUserNameOrEmail(body.userName);
